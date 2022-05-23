@@ -7,12 +7,6 @@ const LatestCollection = props => {
     <section className="tf-section our-latest-page">
     <div className="container">
         <div className="row">
-            <div className="col-md-12">
-                <div className="sc-heading">
-                    <h3>Our Latest Collections</h3>
-                    <p className="desc">Most popular gaming digital nft market place </p>
-                </div>
-            </div>
             {
                 data.slice(0,3).map((item,index)=> (
                     <div key={index} className={item.col}>

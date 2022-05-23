@@ -13,8 +13,8 @@ import Register from './Register'
 import Contact from './Contact'
 
 const routes = [
-    { path: '/', component: <Home/>},
-    { path: '/explore', component: <Explore />},
+    { path: '/', component: <Explore />},
+    { path: '/nft', component: <Home />},
     { path: '/creator', component: <Creator />},
     { path: '/item', component: <Item />},
     { path: '/item-details', component: <ItemDetails />},

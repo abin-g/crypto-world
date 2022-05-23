@@ -6,7 +6,7 @@ const menus = [
             {
                 id: 1,
                 sub: 'NFT',
-                links: '/'
+                links: '/nft'
             },
         ]
     },
