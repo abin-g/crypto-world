@@ -27,11 +27,9 @@ const Header = () => {
                 .then(res => {
                     const address = res;
                     if (address !== '') {
-                        console.log("Wallet loaded......");
                         document.getElementById("connect_wallet").style.display="none";
                         document.getElementById("user_profile").style.display="";
                     } else {
-                        console.log("No Wallet Recognised...");
                         document.getElementById("user_profile").style.display="none";
                         document.getElementById("connect_wallet").style.display="";
                     }

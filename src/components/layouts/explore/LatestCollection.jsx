@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 
 const LatestCollection = props => {
+ 
     const data = props.data
   return (
     <section className="tf-section our-latest-page">

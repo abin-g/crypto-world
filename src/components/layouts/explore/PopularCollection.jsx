@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap';
 
 const PopularCollection = props => {
-    const data = props.data;
+    const data = props.data; 
 
     const [visible , setVisible] = useState(9);
     const showMoreItems = () => {

@@ -1,6 +1,5 @@
 import Home from "./Home";
 import Explore from './Explore'
-import Creator from './Creator'
 import Item from './Item'
 import ItemDetails from './ItemDetails'
 import Blog from './Blog'
@@ -13,9 +12,9 @@ import Register from './Register'
 import Contact from './Contact'
 
 const routes = [
-    { path: '/', component: <Explore />},
-    { path: '/nft', component: <Home />},
-    { path: '/creator', component: <Creator />},
+    { path: '/', component: <Home />},
+    { path: '/nft', component: <Explore />},
+    { path: '/creator', component: <Explore />},
     { path: '/item', component: <Item />},
     { path: '/item-details', component: <ItemDetails />},
     { path: '/blog', component: <Blog />},
