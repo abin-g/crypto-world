@@ -17,7 +17,7 @@ const Home = () => {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer' + STRAPI_API
+              'Authorization': STRAPI_API
             },
           })
           .then(response => response.json())
