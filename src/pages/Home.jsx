@@ -7,13 +7,15 @@ import LatestCollection from '../components/layouts/explore/LatestCollection'
 import dataCollections from '../assets/site-data/dataCollections'
 
 const Home = () => {
-    //const [users, setUsers] = useState([])   
-    //const [isLoading, setIsLoading] = useState(false)
-    const STRAPI_API = process.env.REACT_APP_STRAPI_API;
+    const [blogData, setBlogData] = useState([])   
+    const [isLoading, setIsLoading] = useState(false)
+    const STRAPI_API      = process.env.REACT_APP_STRAPI_API;
+    const STRAPI_BASE_URL = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site";
+    const API_ENDPOINT    = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/add-articles?_limit=6"
 
-    const url = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/add-articles?_limit=6"
+
     const fetchData = () => {
-        fetch(url, {
+        fetch(API_ENDPOINT, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -22,8 +24,8 @@ const Home = () => {
           })
           .then(response => response.json())
           .then(data => {
-            console.log("Response Data:",data);      
-            
+            setIsLoading(false)     
+            setBlogData(data);
           })
           .catch(error => {
             console.error(error)
@@ -31,13 +33,12 @@ const Home = () => {
             );
       }
     
-
       useEffect(() => {
         fetchData()
       }, [])
 
-      //const blodata = users.data; console.log(blodata)
-     // if (!blodata) return null;
+      const blogdata = blogData; console.log("daaa",blogdata)
+      if (!blogdata) return null;
 
     return <div>
         <Header />
@@ -58,27 +59,34 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-        
-                            <div key="" className="col-lg-4 col-md-6">
-                                <article className="sc-card-article">
-                                    <div className="card-media">
-                                        <Link to="/blog-details"><img src="" loader="lazy" style={{height:'240px'}} alt="Maximo" /></Link>
-                                    </div>
-                                    <div className="content">
-                                        <div className="meta-info">
-                                            <div className="item author">
-                                                <Link to="/authors">Author</Link>
-                                            </div>
-                                            <div className="item date">Date</div>
-                                        </div>
-                                        <div className="text-article">
-                                            <h5><Link to="/blog-details">Title</Link></h5>
-                                        </div>
-                                        <Link to="/blog-details"
-                                            className="sc-button btn-bordered-white style letter"><span>Read More</span></Link>
-                                    </div>
-                                </article>
-                            </div>
+                    {isLoading && <p><center>Loading...</center></p>}
+                    {blogdata.length > 0 && ( 
+                         <>
+                         {blogdata.map(data => (
+                             <div key={data.id} className="col-lg-4 col-md-6">
+                                 <article className="sc-card-article">
+                                     <div className="card-media">
+                                         <Link to="/blog-details"><img src={`${STRAPI_BASE_URL}${data.Thumbnail.url}`} loader="lazy" style={{height:'240px'}} alt={data.alternativeText} /></Link>
+                                     </div>
+                                     <div className="content">
+                                         <div className="meta-info">
+                                             <div className="item author">
+                                                 <Link to="/authors">{data.Author}</Link>
+                                             </div>
+                                             <div className="item date">{data.Date}</div>
+                                         </div>
+                                         <div className="text-article">
+                                             <h5><Link to="/blog-details">{data.Title}</Link></h5>
+                                         </div>
+                                         <Link to="/blog-details"
+                                             className="sc-button btn-bordered-white style letter"><span>Read More</span></Link>
+                                     </div>
+                                 </article>
+                             </div>
+
+                        ))} </>
+
+                        )}
                        
                 </div>
             </div>
