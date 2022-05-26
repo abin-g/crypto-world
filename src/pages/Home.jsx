@@ -37,7 +37,7 @@ const Home = () => {
         fetchData()
       }, [])
 
-      const blogdata = blogData; console.log("daaa",blogdata)
+      const blogdata = blogData;
       if (!blogdata) return null;
 
     return <div>
@@ -66,17 +66,17 @@ const Home = () => {
                              <div key={data.id} className="col-lg-4 col-md-6">
                                  <article className="sc-card-article">
                                      <div className="card-media">
-                                         <Link to="/blog-details"><img src={`${STRAPI_BASE_URL}${data.Thumbnail.url}`} loader="lazy" style={{height:'240px'}} alt={data.alternativeText} /></Link>
+                                         <Link to={`/blog-details/${data.id}`}><img src={`${STRAPI_BASE_URL}${data.Thumbnail.url}`} loader="lazy" style={{height:'240px'}} alt={data.alternativeText} /></Link>
                                      </div>
                                      <div className="content">
                                          <div className="meta-info">
                                              <div className="item author">
-                                                 <Link to="/authors">{data.Author}</Link>
+                                                 <Link to={`/authors/${data.Slug}`}>{data.Author}</Link>
                                              </div>
                                              <div className="item date">{data.Date}</div>
                                          </div>
                                          <div className="text-article">
-                                             <h5><Link to="/blog-details">{data.Title}</Link></h5>
+                                             <h5><Link to={`/blog-details/${data.id}`}>{data.Title}</Link></h5>
                                          </div>
                                          <Link to="/blog-details"
                                              className="sc-button btn-bordered-white style letter"><span>Read More</span></Link>

@@ -1,129 +1,91 @@
-import React , {useState} from 'react';
+import { constants } from "ethers";
+import React, { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
-import { Dropdown } from 'react-bootstrap';
 
-const PopularCollection = props => {
-    const data = props.data; 
+const PopularCollection = () => {
 
-    const [visible , setVisible] = useState(9);
+    const [blogData, setBlogData] = useState([]) 
+    const [visible , setVisible] = useState(9);  
+    const [isLoading, setIsLoading] = useState(false)
+    const STRAPI_API      = process.env.REACT_APP_STRAPI_API;
+    const STRAPI_BASE_URL = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site";
+    const API_ENDPOINT    = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/add-articles";
+
     const showMoreItems = () => {
         setVisible((prevValue) => prevValue + 4);
     }
+
+    const fetchData = () => {
+        fetch(API_ENDPOINT, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': STRAPI_API
+            },
+          })
+          .then(response => response.json())
+          .then(data => {
+            setIsLoading(false)     
+            setBlogData(data);
+          })
+          .catch(error => {
+            console.error(error)
+          }
+            );
+      }
+    
+      useEffect(() => {
+        fetchData()
+      }, [])
+
+      const blogdata = blogData; //console.log("daaa",blogdata)
+      if (!blogdata) return null;
+
+
   return (
     <section className="tf-section trendy-colection-page style-2">
         <div className="container">
             <div className="row">
-                <div className="col-md-12">
-                    <div className="wg-drop-category seclect-box">
-                        <Dropdown>
-                            <Dropdown.Toggle className="btn-selector nolink" id="dropdown-basic">
-                                <span>All Categories</span>
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                            <Dropdown.Item href="#">
-                                <span>NFT</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#">
-                                <span>Crypto</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#">
-                                <span>Token</span>
-                            </Dropdown.Item>
-
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        <Dropdown>
-                            <Dropdown.Toggle className="btn-selector nolink" id="dropdown-basic">
-                                <span>New Items</span>
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                            <Dropdown.Item href="#">
-                                <span>New bestsellers</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#">
-                                <span>New releases</span>
-                            </Dropdown.Item>
-
-                            </Dropdown.Menu>
-                        </Dropdown>
-
-                        <Dropdown>
-                            <Dropdown.Toggle className="btn-selector nolink" id="dropdown-basic">
-                                <span>Buy Now</span>
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                            <Dropdown.Item href="#">
-                                <span>Wallet</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#">
-                                <span>Website</span>
-                            </Dropdown.Item>
-
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        <Dropdown>
-                            <Dropdown.Toggle className="btn-selector nolink" id="dropdown-basic">
-                                <span>Sort By</span>
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                            <Dropdown.Item href="#">
-                                <span>View</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#">
-                                <span>Rating</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#">
-                                <span>Sale</span>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#">
-                                <span>Date</span>
-                            </Dropdown.Item>
-
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        <button className="sc-button style letter style-2"><span>Filter</span> </button>
-                    </div>
-                </div>
-                {
-                    data.slice(0,visible).map((item,index)=> (
-                        <div key={index} className='col-lg-4 col-md-6 col-12'>
+            {isLoading && <p><center>Loading...</center></p>}
+                    {blogdata.length > 0 && ( 
+                         <>
+                         {blogdata.map(data => ( 
+                        <div key={data.id} className='col-lg-4 col-md-6 col-12'>
                             <div className="sc-product-item style-2">
                                     <div className="product-img">
-                                        <img src={item.img} alt="Maximo" className="nft-image" />
+                                        <img src={`${STRAPI_BASE_URL}${data.Thumbnail.url}`} alt={data.Title} style={{height:'275px'}} className="nft-image" />
                                         <Link to="/connect-wallet"
-                                            className="sc-button style letter"><span>Buy Now</span></Link>
-                                        <label>{item.tags}</label>
+                                            className="sc-button style letter"><span>Buy Article</span></Link>
+                                        <label>TECHNOLOGY</label>
                                     </div>
                                     <div className="product-content">
-                                        <h5 className="title"><Link to="/item-details">{item.title}</Link> </h5>
+                                        <h5 className="title"><Link to="/item-details">{data.Title}</Link> </h5>
                                         <div className="product-author flex">
                                             <div className="avatar">
-                                                <img src={item.imgAuthor} alt="Maximo" />
+                                                <img src={`${STRAPI_BASE_URL}${data.Thumbnail.url}`} alt="Maximo" loader="lazy"/>
                                             </div>
                                             <div className="infor">
-                                                <div className="author-name"><Link to="/authors">{item.name}</Link></div>
+                                                <div className="author-name"><Link to="/authors">{data.Author}</Link></div>
                                                 <span>Creator</span>
                                             </div>
                                         </div>
                                         <div className="product-price flex">
-                                            <div className="title">Current Bid</div>
+                                            <div className="title">Own this Blog @</div>
                                             <div className="price">
-                                                <span>{item.price}</span>
-                                                <span>= {item.priceChange}</span>
+                                                <span>100 ETH</span>
+                                                <span> = (200 INR)</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                         </div>
-                    ))
-                }
-                
+                 ))} </>
+
+                 )}
+
+
                 {
-                    visible < data.length && 
+                    visible < blogdata.length && 
                     <div className="col-md-12">
                         <button id="loadmore" className=" sc-button style letter style-2" onClick={showMoreItems}><span>Explore More</span>
                         </button>

@@ -18,7 +18,7 @@ const routes = [
     { path: '/item', component: <Item />},
     { path: '/item-details', component: <ItemDetails />},
     { path: '/blog', component: <Blog />},
-    { path: '/blog-details', component: <BlogDetails />},
+    { path: '/blog-details/:slug', component: <BlogDetails />},
     { path: '/authors', component: <Authors />},
     { path: '/connect-wallet', component: <ConnectWallet />},
     { path: '/create-item', component: <CreateItem />},
