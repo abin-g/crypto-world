@@ -17,7 +17,7 @@ const BlogDetails = () => {
     const STRAPI_API      = process.env.REACT_APP_STRAPI_API;
     const STRAPI_BASE_URL = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site";
     const API_ENDPOINT    = `https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/add-articles/${slug}`;
-    const CATEGORY_ENDPOINT    = `https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/add-articles/categories`;
+    const CATEGORY_ENDPOINT    = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/categories";
 
     const fetchData = () => {
         fetch(API_ENDPOINT, {
@@ -63,7 +63,7 @@ const BlogDetails = () => {
 
       const blogdata = blogData; 
       const image = imageData; 
-      
+      console.log("Cat Data:",CatData)
 
   return <div>
     <Header />
