@@ -10,13 +10,14 @@ import avt from '../assets/images/avatar/avt-12.jpg'
 const BlogDetails = () => {
     
     const [blogData, setBlogData] = useState([])   
-    const [isLoading, setIsLoading] = useState(false)
+    const [imageData, setImageData] = useState([]) 
+    const [CatData, setCategoryData] = useState([]) 
     const slug_data       = useParams();
     const slug            = slug_data.slug;
     const STRAPI_API      = process.env.REACT_APP_STRAPI_API;
     const STRAPI_BASE_URL = "https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site";
     const API_ENDPOINT    = `https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/add-articles/${slug}`;
-
+    const CATEGORY_ENDPOINT    = `https://www.develop-sr3snxi-l2plkcrdxzklc.us-3.platformsh.site/add-articles/categories`;
 
     const fetchData = () => {
         fetch(API_ENDPOINT, {
@@ -27,9 +28,27 @@ const BlogDetails = () => {
             },
           })
           .then(response => response.json())
-          .then(data => {
-            setIsLoading(false)     
+          .then(data => {    
             setBlogData(data);
+            setImageData(data.Thumbnail.url);
+          })
+          .catch(error => {
+            console.error(error)
+          }
+            );
+      }
+
+      const fetchCategory = () => {
+        fetch(CATEGORY_ENDPOINT, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': STRAPI_API
+            },
+          })
+          .then(response => response.json())
+          .then(data => {    
+            setCategoryData(data);
           })
           .catch(error => {
             console.error(error)
@@ -39,10 +58,11 @@ const BlogDetails = () => {
     
       useEffect(() => {
         fetchData()
+        fetchCategory()
       }, [])
 
-      const blogdata = blogData; console.log(blogdata);
-        const image = "/uploads/things_successful_blogs_have_in_common_featured_image_210328bf97.jpg";
+      const blogdata = blogData; 
+      const image = imageData; 
       
 
   return <div>
@@ -70,14 +90,11 @@ const BlogDetails = () => {
 
     <div className="tf-section post-details">
         <div className="container">
-            <div className="row">
-
-
-                
+            <div className="row">      
                 <div className="col-lg-8 col-md-12">
                     <article className="blog-details">
                         <div className="post-media">
-                            <img src={`${STRAPI_BASE_URL}${image}`} loader="lazy" alt="Maximo" />
+                            <img src={`${STRAPI_BASE_URL}${image}`} loader="lazy" alt={blogdata.Title} />
                             <div className="meta">
                                 <div className="item author">
                                     <Link to="#">{blogdata.Author}</Link>
