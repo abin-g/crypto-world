@@ -194,17 +194,24 @@ const BlogDetails = () => {
                                 <button className="search search-submit" type="submit" title="Search"></button>
                             </form>
                         </div>
+                        
                         <div className="widget item wg-category">
                             <div className="wg-title">
                                 Category
                             </div>
-                            <ul>
+                            {CatData.length > 0 && ( 
+                         <>
+                         {CatData.map(data => (
+                            <ul style={{paddingBottom:'10px'}}>
                             
-                                <li key=""><Link to="#"><span>Category</span><span>20</span></Link></li>
+                                <li key={data.id}><Link to="#"><span>{data.Name}</span><span>20</span></Link></li>
                                     
                             </ul>
-                        </div>
+                            ))} </>
 
+                            )}
+                        </div>
+                      
                         <div className="widget item widget-post style-3">
                             <div className="wg-title">
                                 Recent News
